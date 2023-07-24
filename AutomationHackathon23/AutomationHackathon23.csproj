@@ -26,4 +26,12 @@
         <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="115.0.5790.10200" />
     </ItemGroup>
 
+	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+		<Exec Command="taskkill /im chromedriver.exe /f" IgnoreExitCode="true" IgnoreStandardErrorWarningFormat="true" />
+	</Target>
+
+	<Target Name="KillChromeDriver" BeforeTargets="BeforeRebuild">
+		<Exec Command="taskkill /im chromedriver.exe /f" IgnoreExitCode="true" IgnoreStandardErrorWarningFormat="true" />
+	</Target>
+
 </Project>
