@@ -124,5 +124,25 @@ namespace AutomationHackathon23.Helpers
             var action = new Actions(driver);
             action.SendKeys(Keys.Enter).Perform();
         }
+        
+        public static void HoverOn(this IWebDriver driver, IWebElement element, int x = 0, int y = 0)
+        {
+            var action = new Actions(driver);
+            action.MoveToElement(element, x, y).Perform();
+        }        
+        
+        public static void meu(this IWebDriver driver, IWebElement element, int x = 0, int y = 0)
+        {
+            var action = new Actions(driver);
+            var xx = element.Size;
+            var yy = element.Location;
+            action.MoveToElement(element, -xx.Width/2, 0)
+                .MoveByOffset(x, y)
+                .ClickAndHold()
+                // .Pause(TimeSpan.FromMilliseconds(500))
+                .Release()
+                .Build()
+                .Perform();
+        }
     }
 }
