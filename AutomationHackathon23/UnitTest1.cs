@@ -253,6 +253,104 @@ namespace AutomationHackathon23
         [Test]
         public void Task2()
         {
+            ChromeDriver.Navigate().GoToUrl("https://www.mathster.com/10secondsmaths/");
+            
+            var subCheckbox = ChromeDriver.FindElement(By.XPath(".//input[@value='sub']"));
+            var powCheckbox = ChromeDriver.FindElement(By.XPath(".//input[@value='pow']"));
+            var mulCheckbox = ChromeDriver.FindElement(By.XPath(".//input[@value='mul']"));
+            var divCheckbox = ChromeDriver.FindElement(By.XPath(".//input[@value='div']"));
+            var sqrtCheckbox = ChromeDriver.FindElement(By.XPath(".//input[@value='sqrt']"));
+            var questionBox = ChromeDriver.FindElement(By.XPath(".//p[@id='question']"));
+            var answerBox = ChromeDriver.FindElement(By.XPath(".//input[@class]"));
+            var slider = ChromeDriver.FindElement(By.XPath(".//div[@id='math-range-slider']/div/div"));
+            var resultElement = ChromeDriver.FindElement(By.XPath(".//div[@id='results']"));
+            
+            Actions move = new Actions(ChromeDriver);
+            move.MoveToElement(slider).ClickAndHold().MoveByOffset(0,250).Release().Perform();
+            move.MoveToElement(slider).ClickAndHold().MoveByOffset(0,250).Release().Perform();
+            move.MoveToElement(slider).ClickAndHold().MoveByOffset(0,250).Release().Perform();
+
+            subCheckbox.Click();
+            powCheckbox.Click();
+            divCheckbox.Click();
+            mulCheckbox.Click();
+            sqrtCheckbox.Click();
+
+            try
+            {
+                while (!resultElement.Displayed)
+                {
+                    string questionString = questionBox.Text;
+                    if (questionString.Contains("+"))
+                    {
+                        string[] parts = questionString.Split("+");
+                        int pirmasDemuo = int.Parse(parts[0]);
+                        int antrasDemuo = int.Parse(parts[1]);
+                        int result = pirmasDemuo + antrasDemuo;
+                        string res = result.ToString();
+                        answerBox.SendKeys(res);
+                    }
+                    else if (questionString.Contains("-"))
+                    {
+                        string[] parts = questionString.Split("-");
+                        int pirmasDemuo = int.Parse(parts[0]);
+                        int antrasDemuo = int.Parse(parts[1]);
+                        int result = pirmasDemuo - antrasDemuo;
+                        string res = result.ToString();
+                        answerBox.SendKeys(res);
+                    }
+                    else if (questionString.Contains("÷"))
+                    {
+                        string[] parts = questionString.Split("÷");
+                        int pirmasDemuo = int.Parse(parts[0]);
+                        int antrasDemuo = int.Parse(parts[1]);
+                        double result = (double) pirmasDemuo / antrasDemuo;
+                        string res = result.ToString();
+                        answerBox.SendKeys(res);
+                    }
+                    else if (questionString.Contains("×"))
+                    {
+                        string[] parts = questionString.Split("×");
+                        int pirmasDemuo = int.Parse(parts[0]);
+                        int antrasDemuo = int.Parse(parts[1]);
+                        int result = pirmasDemuo * antrasDemuo;
+                        string res = result.ToString();
+                        answerBox.SendKeys(res);
+                    }
+                    else if (questionString.Contains("²"))
+                    {
+                        string[] parts = questionString.Split("²");
+                        int pirmasDemuo = int.Parse(parts[0]);
+                        int result = pirmasDemuo * pirmasDemuo;
+                        string res = result.ToString();
+                        answerBox.SendKeys(res);
+                    }
+                    else if (questionString.Contains("³"))
+                    {
+                        string[] parts = questionString.Split("³");
+                        int pirmasDemuo = int.Parse(parts[0]);
+                        int result = pirmasDemuo * pirmasDemuo * pirmasDemuo;
+                        string res = result.ToString();
+                        answerBox.SendKeys(res);
+                    }
+                    else if (questionString.Contains("√"))
+                    {
+                        string[] parts = questionString.Split("√");
+                        int antrasDemuo = int.Parse(parts[1]);
+                        double result = (double) Math.Sqrt(antrasDemuo);
+                        string res = result.ToString();
+                        answerBox.SendKeys(res);
+                    }
+                }
+            }
+            catch
+
+            {
+                // nothing
+            }
+            
+            Console.WriteLine();
+            Thread.Sleep(10000);
         }
 
         [Test]
@@ -536,6 +634,7 @@ namespace AutomationHackathon23
             aaa[index].Click();
             Thread.Sleep(1000);
         }
+        
     }
 
 }
